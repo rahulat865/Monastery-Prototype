@@ -612,6 +612,9 @@ function showMonasteryDetails(monastery) {
 
 // ===== Authentication: login/logout handling (localStorage-based for demo) =====
 // For hackathon demo - uses localStorage instead of backend API
+// Version: 2.0 - No backend required
+
+console.log('Authentication module loaded (localStorage-based)');
 
 // Initialize demo users if not exists
 function initializeDemoUsers() {
@@ -621,11 +624,13 @@ function initializeDemoUsers() {
       { email: 'user@monastery.com', password: 'user123', name: 'Demo User', role: 'Student' }
     ];
     localStorage.setItem('demo_users', JSON.stringify(demoUsers));
+    console.log('Demo users initialized');
   }
 }
 
 async function loginRequest(email, password) {
   try {
+    console.log('Login attempt for:', email);
     // Initialize demo users
     initializeDemoUsers();
     
@@ -645,10 +650,11 @@ async function loginRequest(email, password) {
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify({ email: user.email, name: user.name, role: user.role }));
     
+    console.log('Login successful for:', user.email);
     return { token, user: { email: user.email, name: user.name, role: user.role } };
   } catch (err) {
     console.error('Login error', err);
-    alert('Login failed. Please try again.');
+    alert('Login failed: ' + err.message);
     return null;
   }
 }
