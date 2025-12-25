@@ -70,7 +70,7 @@
     <ul>
       <li><a href="index.html">Home</a></li>
       <li><a href="monasteries.html">Monasteries</a></li>
-      <li><a href="http://localhost:5174" target="_blank" rel="noopener">Preservation</a></li>
+      <li><a href="admin-dashboard.html#preservation">Preservation</a></li>
       <li><a href="#">Virtual Tours</a></li>
       <li><a href="#">Archives</a></li>
       <li><a href="#">About Us</a></li>
@@ -86,7 +86,7 @@
     <ul>
       <li><a href="index.html">Home</a></li>
       <li><a href="monasteries.html">Monasteries</a></li>
-        <li><a href="http://localhost:5174" target="_blank" rel="noopener">Preservation</a></li>
+        <li><a href="admin-dashboard.html#preservation">Preservation</a></li>
       <li><a href="#">Virtual Tours</a></li>
       <li><a href="#">Archives</a></li>
       <li><a href="#">About Us</a></li>
@@ -130,6 +130,7 @@
         <button class="tab-btn" onclick="showTab('photos')">All Photos</button>
         <button class="tab-btn" onclick="showTab('videos')">All Videos</button>
         <button class="tab-btn" onclick="showTab('feedback')">All Feedback</button>
+        <button class="tab-btn" onclick="showTab('preservation')">Preservation</button>
       </div>
 
       <!-- Add Event Tab -->
@@ -218,7 +219,82 @@
         <div id="allFeedbackList" class="content-grid"></div>
       </div>
 
-      
+      <!-- Preservation Tab -->
+      <div id="preservation" class="tab-content">
+        <h3>Monastery Preservation & Monitoring</h3>
+        <p style="color: #666; margin-bottom: 20px;">Upload images to monitor structural changes and preserve monastery heritage.</p>
+        
+        <!-- Upload Section -->
+        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
+          <h4>Upload Preservation Image</h4>
+          <form id="uploadImageForm" class="event-form" style="max-width: 100%;">
+            <div class="form-group">
+              <label for="imageFile">Select Image *</label>
+              <input type="file" id="imageFile" accept="image/*" required>
+            </div>
+            <div class="form-group">
+              <label for="imageType">Image Type *</label>
+              <select id="imageType" required>
+                <option value="baseline">Baseline (Reference)</option>
+                <option value="current">Current (Monitoring)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="locationInput">Monastery Location *</label>
+              <input type="text" id="locationInput" placeholder="e.g., Rumtek Monastery" required>
+            </div>
+            <div class="form-group">
+              <label for="componentInput">Structure Component *</label>
+              <input type="text" id="componentInput" placeholder="e.g., Main Hall, Stupa, Wall" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Upload Image</button>
+          </form>
+        </div>
+
+        <!-- Comparison Section -->
+        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
+          <h4>Compare Images</h4>
+          <form class="event-form" style="max-width: 100%;">
+            <div class="form-group">
+              <label for="selectBaseline">Baseline Image *</label>
+              <select id="selectBaseline" required>
+                <option value="">Select baseline image...</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="selectCurrent">Current Image *</label>
+              <select id="selectCurrent" required>
+                <option value="">Select current image...</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="compareLocation">Location</label>
+              <input type="text" id="compareLocation" placeholder="Monastery location">
+            </div>
+            <div class="form-group">
+              <label for="compareComponent">Component</label>
+              <input type="text" id="compareComponent" placeholder="Structure component">
+            </div>
+            <button type="button" id="runCompareBtn" class="btn btn-primary">Run Comparison</button>
+            <button type="button" id="refreshImagesBtn" class="btn" style="background: #6c757d; color: white; margin-left: 10px;">Refresh Images</button>
+          </form>
+        </div>
+
+        <!-- Comparison Results -->
+        <div id="comparisonResult" style="display: none; background: #fff; padding: 20px; border-radius: 8px; margin-bottom: 30px; border: 2px solid #007bff;"></div>
+
+        <!-- Stored Images -->
+        <div>
+          <h4>Stored Preservation Images</h4>
+          <div id="preservationImagesList" class="content-grid"></div>
+        </div>
+
+        <!-- Comparison History -->
+        <div style="margin-top: 30px;">
+          <h4>Comparison History</h4>
+          <div id="comparisonsList" style="background: #fff; padding: 20px; border-radius: 8px; max-height: 400px; overflow-y: auto;"></div>
+        </div>
+      </div>
 
       <!-- Logout Section -->
       <div class="logout-section">

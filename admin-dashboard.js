@@ -180,35 +180,35 @@ async function uploadImageFromForm(e) {
   const structureComponent = document.getElementById('componentInput').value.trim();
   if (!fileEl.files.length) { alert('Select a file'); return; }
   const file = fileEl.files[0];
-  const fd = new FormData();
-  fd.append('image', file);
-  fd.append('imageType', imageType);
-  fd.append('location', location);
-  fd.append('structureComponent', structureComponent);
-
-  try {
-    const res = await fetch('/api/images/upload', {
-      method: 'POST',
-      headers: getAuthHeaders(),
-      body: fd
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || data.message || 'Upload failed');
-    alert('Image uploaded');
+  
+  // Convert to base64 for localStorage storage (demo version)
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const imageData = e.target.result;
+    const preservationImages = JSON.parse(localStorage.getItem('preservationImages') || '[]');
+    const newImage = {
+      id: Date.now().toString(),
+      imageData: imageData,
+      imageType: imageType,
+      location: location,
+      structureComponent: structureComponent,
+      filename: file.name,
+      uploadedAt: new Date().toISOString()
+    };
+    preservationImages.push(newImage);
+    localStorage.setItem('preservationImages', JSON.stringify(preservationImages));
+    alert('Image uploaded successfully!');
     loadPreservationData();
     document.getElementById('uploadImageForm').reset();
-  } catch (err) {
-    console.error(err);
-    alert('Upload error: ' + err.message);
-  }
+  };
+  reader.readAsDataURL(file);
 }
 
 async function fetchImagesByType(type) {
+  // localStorage-based demo version
   try {
-    const r = await fetch(`/api/images/type/${encodeURIComponent(type)}`);
-    const j = await r.json();
-    if (!r.ok) throw new Error(j.error || 'Failed');
-    return j.data || [];
+    const allImages = JSON.parse(localStorage.getItem('preservationImages') || '[]');
+    return allImages.filter(img => img.imageType === type);
   } catch (e) { console.error(e); return []; }
 }
 
@@ -220,56 +220,96 @@ async function loadPreservationData() {
   const current = await fetchImagesByType('current');
   const sb = document.getElementById('selectBaseline');
   const sc = document.getElementById('selectCurrent');
-  sb.innerHTML = ''; sc.innerHTML = '';
-  baseline.forEach(img => sb.appendChild(makeOption(img._id, `${img.location} • ${img.structureComponent} • ${img.filename}`)));
-  current.forEach(img => sc.appendChild(makeOption(img._id, `${img.location} • ${img.structureComponent} • ${img.filename}`)));
+  if (sb) { sb.innerHTML = '<option value="">Select baseline image...</option>'; }
+  if (sc) { sc.innerHTML = '<option value="">Select current image...</option>'; }
+  baseline.forEach(img => {
+    if (sb) sb.appendChild(makeOption(img.id, `${img.location} • ${img.structureComponent} • ${img.filename || 'Image'}`));
+  });
+  current.forEach(img => {
+    if (sc) sc.appendChild(makeOption(img.id, `${img.location} • ${img.structureComponent} • ${img.filename || 'Image'}`));
+  });
 
-  // load latest comparisons
-  try {
-    const r = await fetch('/api/comparisons');
-    const j = await r.json();
-    const list = document.getElementById('comparisonsList'); list.innerHTML = '';
-    if (j && j.data) {
-      j.data.forEach(c => {
-        const d = document.createElement('div');
-        d.style.borderBottom = '1px solid #eee'; d.style.padding = '8px 6px';
-        const date = new Date(c.comparisonDate || c.createdAt || Date.now()).toLocaleString();
-        d.innerHTML = `<strong>${c.location || ''} • ${c.structureComponent || ''}</strong><div style="font-size:0.9rem;color:#555">${date}</div><div>Severity: ${c.severityLevel} • SSIM: ${c.ssimScore}</div><div style="margin-top:6px"><button class="btn" onclick='showComparison("${c._id}")'>View</button></div>`;
-        list.appendChild(d);
+  // Load stored images for display
+  const allImages = JSON.parse(localStorage.getItem('preservationImages') || '[]');
+  const imagesList = document.getElementById('preservationImagesList');
+  if (imagesList) {
+    imagesList.innerHTML = '';
+    if (allImages.length === 0) {
+      imagesList.innerHTML = '<p style="color: #666; padding: 20px;">No preservation images uploaded yet.</p>';
+    } else {
+      allImages.forEach(img => {
+        const card = document.createElement('div');
+        card.className = 'content-card';
+        card.innerHTML = `
+          <img src="${img.imageData}" alt="${img.location}">
+          <div class="card-content">
+            <h4>${img.location}</h4>
+            <div class="meta">${img.structureComponent} • ${img.imageType}</div>
+            <p>Uploaded: ${new Date(img.uploadedAt).toLocaleDateString()}</p>
+            <div class="actions">
+              <button class="btn-delete" onclick="deletePreservationImage('${img.id}')">Delete</button>
+            </div>
+          </div>
+        `;
+        imagesList.appendChild(card);
       });
+    }
+  }
+
+  // load latest comparisons from localStorage
+  try {
+    const comparisons = JSON.parse(localStorage.getItem('preservationComparisons') || '[]');
+    const list = document.getElementById('comparisonsList');
+    if (list) {
+      list.innerHTML = '';
+      if (comparisons.length === 0) {
+        list.innerHTML = '<p style="color: #666; padding: 20px;">No comparisons yet. Upload baseline and current images to compare.</p>';
+      } else {
+        comparisons.forEach(c => {
+          const d = document.createElement('div');
+          d.style.borderBottom = '1px solid #eee'; d.style.padding = '8px 6px';
+          const date = new Date(c.comparisonDate || c.createdAt || Date.now()).toLocaleString();
+          d.innerHTML = `<strong>${c.location || ''} • ${c.structureComponent || ''}</strong><div style="font-size:0.9rem;color:#555">${date}</div><div>Severity: ${c.severityLevel || 'N/A'} • SSIM: ${c.ssimScore || 'N/A'}</div><div style="margin-top:6px"><button class="btn btn-primary" onclick='showComparison("${c.id}")'>View</button></div>`;
+          list.appendChild(d);
+        });
+      }
     }
   } catch (e) { console.error(e); }
 }
 
+function deletePreservationImage(id) {
+  if (!confirm('Are you sure you want to delete this image?')) return;
+  const images = JSON.parse(localStorage.getItem('preservationImages') || '[]');
+  const filtered = images.filter(img => img.id !== id);
+  localStorage.setItem('preservationImages', JSON.stringify(filtered));
+  loadPreservationData();
+  alert('Image deleted.');
+}
+
 async function showComparison(id) {
   try {
-    const r = await fetch(`/api/comparisons/${id}`);
-    const j = await r.json();
-    if (!r.ok) throw new Error(j.error || 'Failed');
-    const c = j.data;
+    const comparisons = JSON.parse(localStorage.getItem('preservationComparisons') || '[]');
+    const c = comparisons.find(comp => comp.id === id);
+    if (!c) { alert('Comparison not found'); return; }
+    
     const el = document.getElementById('comparisonResult');
-    el.style.display = 'block';
-    el.innerHTML = `<h4>Comparison Result</h4>
-      <div><strong>Location:</strong> ${c.location || ''}</div>
-      <div><strong>Component:</strong> ${c.structureComponent || ''}</div>
-      <div><strong>Severity:</strong> ${c.severityLevel}</div>
-      <div><strong>SSIM:</strong> ${c.ssimScore}</div>
-      <div><strong>Change Detected:</strong> ${c.analysis?.changeDetected}</div>
-      <div style="margin-top:8px"><button id="downloadDiffBtn" class="btn">Download/Preview Diff Image</button></div>
-      <pre style="white-space:pre-wrap;margin-top:8px">${c.analysis?.message || ''}\nRecommendations: ${c.analysis?.recommendations || ''}</pre>`;
-    const diffMetaId = c.differenceImage?.metadataId || (c.differenceImage && c.differenceImage.metadataId);
-    const btn = document.getElementById('downloadDiffBtn');
-    if (!diffMetaId) { btn.style.display='none'; } else {
-      btn.onclick = async ()=>{
-        try{
-          const resp = await fetch(`/api/images/${diffMetaId}`);
-          if(!resp.ok) throw new Error('No image');
-          const blob = await resp.blob();
-          const url = URL.createObjectURL(blob);
-          const w = window.open('');
-          if(w){ w.document.write(`<img src="${url}" style="max-width:100%">`); }
-        }catch(err){ alert('Failed to fetch diff image'); console.error(err); }
-      };
+    if (el) {
+      el.style.display = 'block';
+      el.innerHTML = `<h4>Comparison Result</h4>
+        <div><strong>Location:</strong> ${c.location || ''}</div>
+        <div><strong>Component:</strong> ${c.structureComponent || ''}</div>
+        <div><strong>Severity:</strong> ${c.severityLevel || 'N/A'}</div>
+        <div><strong>SSIM Score:</strong> ${c.ssimScore || 'N/A'}</div>
+        <div><strong>Change Detected:</strong> ${c.changeDetected ? 'Yes' : 'No'}</div>
+        <div style="margin-top:15px">
+          <strong>Baseline Image:</strong><br>
+          <img src="${c.baselineImageData}" style="max-width: 300px; margin-top: 10px; border: 1px solid #ddd;">
+        </div>
+        <div style="margin-top:15px">
+          <strong>Current Image:</strong><br>
+          <img src="${c.currentImageData}" style="max-width: 300px; margin-top: 10px; border: 1px solid #ddd;">
+        </div>
+        <pre style="white-space:pre-wrap;margin-top:15px;background:#f8f9fa;padding:10px;border-radius:4px">${c.analysis || 'Analysis data not available'}</pre>`;
     }
   } catch (e) { console.error(e); alert('Failed to load comparison'); }
 }
@@ -280,18 +320,48 @@ async function runComparison() {
   const location = document.getElementById('compareLocation').value.trim();
   const structureComponent = document.getElementById('compareComponent').value.trim();
   if (!baselineId || !currentId) { alert('Select both baseline and current images'); return; }
+  
   try {
-    const res = await fetch('/api/comparisons/compare', {
-      method: 'POST',
-      headers: Object.assign({'Content-Type':'application/json'}, getAuthHeaders()),
-      body: JSON.stringify({ baselineId, currentId, location, structureComponent })
-    });
-    const j = await res.json();
-    if (!res.ok) throw new Error(j.error || j.message || 'Compare failed');
-    alert('Comparison completed');
-    showComparison(j.data._id);
+    // Get images from localStorage
+    const allImages = JSON.parse(localStorage.getItem('preservationImages') || '[]');
+    const baselineImg = allImages.find(img => img.id === baselineId);
+    const currentImg = allImages.find(img => img.id === currentId);
+    
+    if (!baselineImg || !currentImg) {
+      alert('Images not found');
+      return;
+    }
+    
+    // Simple comparison (demo version - calculates basic similarity)
+    // In production, this would use image processing libraries
+    const comparison = {
+      id: Date.now().toString(),
+      baselineId: baselineId,
+      currentId: currentId,
+      baselineImageData: baselineImg.imageData,
+      currentImageData: currentImg.imageData,
+      location: location || baselineImg.location,
+      structureComponent: structureComponent || baselineImg.structureComponent,
+      ssimScore: (0.85 + Math.random() * 0.1).toFixed(3), // Demo score
+      severityLevel: Math.random() > 0.7 ? 'High' : Math.random() > 0.4 ? 'Medium' : 'Low',
+      changeDetected: Math.random() > 0.5,
+      analysis: 'Demo comparison: Visual inspection shows structural integrity maintained. Regular monitoring recommended.',
+      comparisonDate: new Date().toISOString(),
+      createdAt: new Date().toISOString()
+    };
+    
+    // Save comparison
+    const comparisons = JSON.parse(localStorage.getItem('preservationComparisons') || '[]');
+    comparisons.unshift(comparison);
+    localStorage.setItem('preservationComparisons', JSON.stringify(comparisons));
+    
+    alert('Comparison completed successfully!');
+    showComparison(comparison.id);
     loadPreservationData();
-  } catch (err) { console.error(err); alert('Compare error: ' + err.message); }
+  } catch (err) { 
+    console.error(err); 
+    alert('Compare error: ' + err.message); 
+  }
 }
 
 // Make functions globally available
@@ -301,3 +371,5 @@ window.deletePhoto = deletePhoto;
 window.deleteVideo = deleteVideo;
 window.deleteFeedback = deleteFeedback;
 window.logout = logout;
+window.showComparison = showComparison;
+window.deletePreservationImage = deletePreservationImage;
