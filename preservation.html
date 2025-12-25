@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monastery Preservation System | Sikkim Monastery</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .page-hero {
+      padding-top: 90px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      text-align: center;
+      padding-bottom: 40px;
+    }
+    .preservation-section {
+      background: #f9f9f9;
+      padding: 40px 20px 60px;
+    }
+    .preservation-container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .info-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .info-card h3 {
+      color: #333;
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+    }
+    .info-card p {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+    .feature-list {
+      list-style: none;
+      padding: 0;
+    }
+    .feature-list li {
+      padding: 10px 0;
+      color: #555;
+      border-bottom: 1px solid #eee;
+    }
+    .feature-list li:before {
+      content: "✓ ";
+      color: #28a745;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    .btn-preservation {
+      display: inline-block;
+      background: #007bff;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      margin: 10px 10px 10px 0;
+      transition: all 0.3s;
+    }
+    .btn-preservation:hover {
+      background: #0056b3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,123,255,0.3);
+    }
+    .btn-preservation.secondary {
+      background: #6c757d;
+    }
+    .btn-preservation.secondary:hover {
+      background: #5a6268;
+    }
+    .code-block {
+      background: #f8f9fa;
+      border-left: 4px solid #007bff;
+      padding: 15px;
+      border-radius: 4px;
+      margin: 15px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      overflow-x: auto;
+    }
+    .warning-box {
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 15px;
+      border-radius: 4px;
+      margin: 20px 0;
+    }
+    .warning-box h4 {
+      color: #856404;
+      margin-bottom: 10px;
+    }
+    .warning-box p {
+      color: #856404;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">Sikkim Monastery</div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="monasteries.html">Monasteries</a></li>
+      <li><a href="#">Virtual Tours</a></li>
+      <li><a href="#">Archives</a></li>
+      <li><a href="#">About Us</a></li>
+      <li><a href="preservation.html">Preservation</a></li>
+    </ul>
+    <a href="login.html" class="explore-btn">Login</a>
+    <div class="hamburger" id="hamburger">☰</div>
+  </nav>
+
+  <!-- Side Menu -->
+  <div class="side-menu" id="side-menu">
+    <span class="close-btn" id="close-side">✖</span>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="monasteries.html">Monasteries</a></li>
+      <li><a href="#">Virtual Tours</a></li>
+      <li><a href="#">Archives</a></li>
+      <li><a href="#">About Us</a></li>
+      <li><a href="preservation.html">Preservation</a></li>
+      <li><a href="login.html">Login</a></li>
+    </ul>
+  </div>
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <h1>Monastery Preservation System</h1>
+    <p>AI-Powered Image Comparison for Cultural Heritage Monitoring</p>
+  </section>
+
+  <!-- Preservation Section -->
+  <section class="preservation-section">
+    <div class="preservation-container">
+      
+      <div class="info-card">
+        <h3>🏛️ About the Preservation System</h3>
+        <p>The Monastery Preservation System is an advanced AI-powered tool for monitoring structural changes in monastery buildings. It uses computer vision and structural similarity analysis to detect and track deterioration over time.</p>
+        
+        <h4 style="color: #333; margin-top: 20px; margin-bottom: 10px;">Key Features:</h4>
+        <ul class="feature-list">
+          <li>MongoDB GridFS Storage - Secure image storage</li>
+          <li>AI-Powered Comparison - OpenCV and SSIM analysis</li>
+          <li>Real-time Processing - Python microservice for image analysis</li>
+          <li>Visual Difference Highlighting - Annotated images showing changes</li>
+          <li>Severity Classification - Automatic assessment (EXCELLENT, GOOD, MODERATE, POOR, CRITICAL)</li>
+          <li>Comprehensive Reports - Downloadable analysis reports</li>
+          <li>Responsive UI - Modern React interface</li>
+        </ul>
+      </div>
+
+      <div class="info-card">
+        <h3>🚀 Quick Start</h3>
+        <p>The preservation system requires a local setup with MongoDB, Node.js backend, and Python service. Follow these steps to run it:</p>
+        
+        <h4 style="color: #333; margin-top: 20px; margin-bottom: 10px;">Prerequisites:</h4>
+        <ul class="feature-list">
+          <li>Node.js 18.0+</li>
+          <li>Python 3.8+</li>
+          <li>MongoDB 5.0+</li>
+        </ul>
+
+        <h4 style="color: #333; margin-top: 20px; margin-bottom: 10px;">Installation Steps:</h4>
+        <div class="code-block">
+# 1. Navigate to preservation folder<br>
+cd Monastery-Preservation<br><br>
+# 2. Setup Backend<br>
+cd backend<br>
+npm install<br>
+# Create .env file with MongoDB URI<br><br>
+# 3. Setup Python Service<br>
+cd ../python-service<br>
+python -m venv venv<br>
+.\venv\Scripts\Activate<br>
+pip install -r requirements.txt<br><br>
+# 4. Setup Frontend<br>
+cd ../frontend<br>
+npm install
+        </div>
+
+        <h4 style="color: #333; margin-top: 20px; margin-bottom: 10px;">Running the System:</h4>
+        <p>Open 3 separate terminals:</p>
+        <div class="code-block">
+# Terminal 1: Backend (port 5000)<br>
+cd Monastery-Preservation/backend<br>
+npm run dev<br><br>
+# Terminal 2: Python Service (port 5001)<br>
+cd Monastery-Preservation/python-service<br>
+.\venv\Scripts\Activate<br>
+python app.py<br><br>
+# Terminal 3: Frontend (port 5173)<br>
+cd Monastery-Preservation/frontend<br>
+npm run dev
+        </div>
+
+        <div style="margin-top: 20px;">
+          <a href="http://localhost:5173" target="_blank" class="btn-preservation">
+            <i class="fas fa-external-link-alt"></i> Open Preservation System (Local)
+          </a>
+          <a href="Monastery-Preservation/README.md" target="_blank" class="btn-preservation secondary">
+            <i class="fas fa-book"></i> View Full Documentation
+          </a>
+        </div>
+      </div>
+
+      <div class="warning-box">
+        <h4>⚠️ Note for Hackathon Demo</h4>
+        <p>The preservation system requires local setup with MongoDB, Node.js, and Python. For the hackathon, you can demonstrate it by running the services locally, or provide screenshots/video of the system in action. The full system is available in the <code>Monastery-Preservation</code> folder.</p>
+      </div>
+
+      <div class="info-card">
+        <h3>📖 Documentation</h3>
+        <p>For complete setup instructions, API documentation, and troubleshooting, please refer to:</p>
+        <ul class="feature-list">
+          <li><a href="Monastery-Preservation/README.md" target="_blank" style="color: #007bff;">README.md</a> - Complete installation guide</li>
+          <li><a href="Monastery-Preservation/API_DOCUMENTATION.md" target="_blank" style="color: #007bff;">API_DOCUMENTATION.md</a> - API endpoints reference</li>
+          <li><a href="Monastery-Preservation/QUICK_START.md" target="_blank" style="color: #007bff;">QUICK_START.md</a> - Quick start guide</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="footer-logo">📜</div>
+        <div>
+          <h4>Sikkim Monastery</h4>
+          <p>Preserving heritage, one pixel at a time.</p>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Contact Us</a>
+      </div>
+      <div class="footer-social">
+        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2024 Sikkim Monastery. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+
+</body>
+</html>
+
