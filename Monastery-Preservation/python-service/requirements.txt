@@ -1,0 +1,6 @@
+flask
+opencv-python
+scikit-image
+numpy
+Pillow
+python-dotenv
