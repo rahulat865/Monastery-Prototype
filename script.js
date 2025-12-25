@@ -610,29 +610,45 @@ function showMonasteryDetails(monastery) {
   if (desc) desc.innerText = monastery.details;
 }
 
-// ===== Authentication: login/logout handling =====
-const API_BASE = 'http://localhost:4000/api/v1';
+// ===== Authentication: login/logout handling (localStorage-based for demo) =====
+// For hackathon demo - uses localStorage instead of backend API
+
+// Initialize demo users if not exists
+function initializeDemoUsers() {
+  if (!localStorage.getItem('demo_users')) {
+    const demoUsers = [
+      { email: 'admin@monastery.com', password: 'admin123', name: 'Admin User', role: 'Admin' },
+      { email: 'user@monastery.com', password: 'user123', name: 'Demo User', role: 'Student' }
+    ];
+    localStorage.setItem('demo_users', JSON.stringify(demoUsers));
+  }
+}
 
 async function loginRequest(email, password) {
   try {
-    const res = await fetch(`${API_BASE}/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
-    });
-    const data = await res.json();
-    if (!res.ok) {
-      const msg = data?.message || 'Login failed';
-      alert(msg);
+    // Initialize demo users
+    initializeDemoUsers();
+    
+    // Get users from localStorage
+    const users = JSON.parse(localStorage.getItem('demo_users') || '[]');
+    const user = users.find(u => u.email === email && u.password === password);
+    
+    if (!user) {
+      alert('Invalid email or password. Try:\nAdmin: admin@monastery.com / admin123\nUser: user@monastery.com / user123');
       return null;
     }
-    // store token and user
-    if (data.token) localStorage.setItem('token', data.token);
-    if (data.user) localStorage.setItem('user', JSON.stringify(data.user));
-    return data;
+    
+    // Create token (simple demo token)
+    const token = btoa(JSON.stringify({ email: user.email, role: user.role, timestamp: Date.now() }));
+    
+    // Store token and user
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify({ email: user.email, name: user.name, role: user.role }));
+    
+    return { token, user: { email: user.email, name: user.name, role: user.role } };
   } catch (err) {
     console.error('Login error', err);
-    alert('Unable to contact authentication server.');
+    alert('Login failed. Please try again.');
     return null;
   }
 }
@@ -673,23 +689,31 @@ if (userForm) {
   });
 }
 
-// ===== Signup handling =====
+// ===== Signup handling (localStorage-based for demo) =====
 async function signupRequest(name, email, password, role='Student'){
   try{
-    const res = await fetch(`${API_BASE}/signup`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email, password, role })
-    });
-    const data = await res.json();
-    if (!res.ok) {
-      alert(data?.message || 'Signup failed');
+    // Initialize demo users
+    initializeDemoUsers();
+    
+    // Get existing users
+    const users = JSON.parse(localStorage.getItem('demo_users') || '[]');
+    
+    // Check if user already exists
+    if (users.find(u => u.email === email)) {
+      alert('User with this email already exists. Please login instead.');
       return null;
     }
-    return data;
+    
+    // Add new user
+    const newUser = { email, password, name, role };
+    users.push(newUser);
+    localStorage.setItem('demo_users', JSON.stringify(users));
+    
+    alert('Account created successfully! You will be logged in now.');
+    return { user: newUser };
   }catch(err){
     console.error('Signup error', err);
-    alert('Unable to contact authentication server.');
+    alert('Signup failed. Please try again.');
     return null;
   }
 }
