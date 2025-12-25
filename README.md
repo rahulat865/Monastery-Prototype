@@ -1,4 +1,4 @@
-# Sikkim Monastery Heritage Portal
+# Have-In-Sikkim Heritage Portal
 
 A web platform to explore, preserve, and celebrate the rich heritage of Sikkim's monasteries. Experience virtual tours, community stories, and AI-powered insights—all in one place.
 
