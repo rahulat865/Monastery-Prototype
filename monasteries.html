@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monasteries | Sikkim Monastery</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Page-specific styles for monasteries grid */
+    .page-hero {
+      padding-top: 90px;
+      background: #0a0a0a;
+      color: #fff;
+      text-align: center;
+      padding-bottom: 30px;
+    }
+    .page-hero h1 { font-size: 2rem; margin-bottom: 8px; }
+    .page-hero p { color: #ddd; max-width: 800px; margin: 0 auto; }
+
+    .monasteries-section {
+      padding: 30px 20px 60px;
+      background: #f9f9f9;
+    }
+    .monastery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .monastery-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .monastery-card:hover { transform: translateY(-4px); box-shadow: 0 6px 16px rgba(0,0,0,0.12);}    
+    .monastery-card img { width: 100%; height: 160px; object-fit: cover; }
+    .monastery-card .content { padding: 14px; }
+    .monastery-card h3 { font-size: 1.05rem; margin-bottom: 6px; color: #222; }
+    .monastery-card p { font-size: 0.92rem; color: #666; margin-bottom: 10px; }
+    .monastery-card a { color: #007bff; text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+    .monastery-card .actions { display: flex; gap: 8px; margin-top: 8px; }
+    .monastery-card .btn-more { background: #28a745; color: white; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9rem; }
+    .monastery-card .btn-more:hover { background: #218838; }
+    
+    /* Video Modal */
+    .video-modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }
+    .video-modal-content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 90%; max-height: 90%; }
+    .video-modal video { width: 100%; height: auto; max-height: 80vh; border-radius: 8px; }
+    .video-modal .close { position: absolute; top: -40px; right: 0; color: white; font-size: 28px; font-weight: bold; cursor: pointer; }
+    .video-modal .close:hover { color: #ccc; }
+  </style>
+  <link rel="icon" href="data:,">
+  <!-- prevent favicon 404 -->
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">Sikkim Monastery</div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="monasteries.html">Monasteries</a></li>
+      <li><a href="https://www.360easyvr.com/vr/9096?scene_id=25633" target="_blank" rel="noopener">Virtual Tours</a></li>
+      <li><a href="#">Archives</a></li>
+      <li><a href="#">About Us</a></li>
+    </ul>
+    <a href="#" class="explore-btn">Explore</a>
+    <div class="hamburger" id="hamburger">☰</div>
+  </nav>
+
+  <!-- Side Menu -->
+  <div class="side-menu" id="side-menu">
+    <span class="close-btn" id="close-side">✖</span>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="monasteries.html">Monasteries</a></li>
+      <li><a href="https://www.360easyvr.com/vr/9096?scene_id=25633" target="_blank" rel="noopener">Virtual Tours</a></li>
+      <li><a href="#">Archives</a></li>
+      <li><a href="#">About Us</a></li>
+    </ul>
+  </div>
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <h1>Monasteries of Sikkim</h1>
+    <p>Browse notable monasteries across Sikkim. Click a card to learn more.</p>
+  </section>
+
+  <!-- Monasteries Grid -->
+  <section class="monasteries-section">
+    <div class="monastery-grid">
+      <div class="monastery-card">
+        <img src="./img/RumtekMonastery.jpeg" alt="Rumtek Monastery">
+        <div class="content">
+          <h3>Rumtek Monastery</h3>
+          <p>The largest monastery in Sikkim; seat of the Karmapa Lama.</p>
+          <div class="actions">
+            <a href="https://en.wikipedia.org/wiki/Rumtek_Monastery" target="_blank" rel="noopener noreferrer">Learn more</a>
+            <button class="btn-more" onclick="openVideoModal('./Animated video/Rumtek Monastery Animated.mp4', 'Rumtek Monastery')">More</button>
+          </div>
+        </div>
+      </div>
+      <div class="monastery-card">
+        <img src="./img/PemayangtseMonastery.jpeg" alt="Pemayangtse Monastery">
+        <div class="content">
+          <h3>Pemayangtse Monastery</h3>
+          <p>Historic Nyingma monastery, founded in 1705 near Pelling.</p>
+          <div class="actions">
+            <a href="https://en.wikipedia.org/wiki/Pemayangtse_Monastery" target="_blank" rel="noopener noreferrer">Learn more</a>
+            <button class="btn-more" onclick="openVideoModal('./Animated video/Pemayangtse Monastery Animated.mp4', 'Pemayangtse Monastery')">More</button>
+          </div>
+        </div>
+      </div>
+      <div class="monastery-card">
+        <img src="./img/TashidingMonastery.jpeg" alt="Tashiding Monastery">
+        <div class="content">
+          <h3>Tashiding Monastery</h3>
+          <p>Considered the holiest monastery in Sikkim, built in 1641.</p>
+          <div class="actions">
+            <a href="https://en.wikipedia.org/wiki/Tashiding_Monastery" target="_blank" rel="noopener noreferrer">Learn more</a>
+            <button class="btn-more" onclick="openVideoModal('./img/TashidingMonastery.jpeg', 'Tashiding Monastery')">More</button>
+          </div>
+        </div>
+      </div>
+      <div class="monastery-card">
+        <img src="./img/PhodongMonastery.jpg" alt="Phodong Monastery">
+        <div class="content">
+          <h3>Phodong Monastery</h3>
+          <p>18th-century Kagyu monastery famed for frescoes and festivals.</p>
+          <div class="actions">
+            <a href="https://en.wikipedia.org/wiki/Phodong_Monastery" target="_blank" rel="noopener noreferrer">Learn more</a>
+            <button class="btn-more" onclick="openVideoModal('./img/PhodongMonastery.jpg', 'Phodong Monastery')">More</button>
+          </div>
+        </div>
+      </div>
+      <div class="monastery-card">
+        <img src="./img/EncheyMonastery.jpeg" alt="Enchey Monastery">
+        <div class="content">
+          <h3>Enchey Monastery</h3>
+          <p>Gangtok's famed Nyingma monastery associated with Drupthob Karpo.</p>
+          <div class="actions">
+            <a href="https://en.wikipedia.org/wiki/Enchey_Monastery" target="_blank" rel="noopener noreferrer">Learn more</a>
+            <button class="btn-more" onclick="openVideoModal('./img/EncheyMonastery.jpeg', 'Enchey Monastery')">More</button>
+          </div>
+        </div>
+      </div>
+      <div class="monastery-card">
+        <img src="./img/RalongMonastery.jpeg" alt="Ralong Monastery">
+        <div class="content">
+          <h3>Ralong Monastery</h3>
+          <p>Known for the Kagyed Dance Festival; new gompa built in 1995.</p>
+          <div class="actions">
+            <a href="https://en.wikipedia.org/wiki/Ralong_Monastery" target="_blank" rel="noopener noreferrer">Learn more</a>
+            <button class="btn-more" onclick="openVideoModal('./Animated video/Ralong Monastery Animated.mp4', 'Ralong Monastery')">More</button>
+          </div>
+        </div>
+      </div>
+      <div class="monastery-card">
+        <img src="./img/Lachen_Monastery.jpeg" alt="Lachen Monastery">
+        <div class="content">
+          <h3>Lachen Monastery</h3>
+          <p>Ngodrub Choling (1858), spiritual centre for the Lachenpas.</p>
+          <div class="actions">
+            <a href="https://en.wikipedia.org/wiki/Lachen_Monastery" target="_blank" rel="noopener noreferrer">Learn more</a>
+            <button class="btn-more" onclick="openVideoModal('./img/Lachen_Monastery.jpeg', 'Lachen Monastery')">More</button>
+          </div>
+        </div>
+      </div>
+      <div class="monastery-card">
+        <img src="./img/DubdiMonastery.jpeg" alt="Dubdi Monastery">
+        <div class="content">
+          <h3>Dubdi Monastery</h3>
+          <p>First monastery of Sikkim (1701), located near Yuksom.</p>
+          <div class="actions">
+            <a href="https://en.wikipedia.org/wiki/Dubdi_Monastery" target="_blank" rel="noopener noreferrer">Learn more</a>
+            <button class="btn-more" onclick="openVideoModal('./img/DubdiMonastery.jpeg', 'Dubdi Monastery')">More</button>
+          </div>
+        </div>
+      </div>
+      <div class="monastery-card">
+        <img src="./img/KartokMonastery.jpg" alt="Kartok Monastery">
+        <div class="content">
+          <h3>Kartok Monastery</h3>
+          <p>Picturesque monastery near Kathok Lake at Yuksom.</p>
+          <div class="actions">
+            <a href="https://en.wikipedia.org/wiki/Katok_Monastery" target="_blank" rel="noopener noreferrer">Learn more</a>
+            <button class="btn-more" onclick="openVideoModal('./img/KartokMonastery.jpg', 'Kartok Monastery')">More</button>
+          </div>
+        </div>
+      </div>
+      <div class="monastery-card">
+        <img src="./img/SangaChoelingMonastery.jpg" alt="Sanga Choeling Monastery">
+        <div class="content">
+          <h3>Sanga Choeling Monastery</h3>
+          <p>Among Sikkim's oldest (1697), reachable via Pelling trek.</p>
+          <div class="actions">
+            <a href="https://en.wikipedia.org/wiki/Sanga_Choling_Monastery" target="_blank" rel="noopener noreferrer">Learn more</a>
+            <button class="btn-more" onclick="openVideoModal('./img/SangaChoelingMonastery.jpg', 'Sanga Choeling Monastery')">More</button>
+          </div>
+        </div>
+      </div>
+      <div class="monastery-card">
+        <img src="./img/GonjangMonastery.jpeg" alt="Gonjang Monastery">
+        <div class="content">
+          <h3>Gonjang Monastery</h3>
+          <p>Near Tashi Viewpoint in Gangtok; established in 1981.</p>
+          <div class="actions">
+            <a href="https://en.wikipedia.org/wiki/Sikkim" target="_blank" rel="noopener noreferrer">Learn more</a>
+            <button class="btn-more" onclick="openVideoModal('./img/GonjangMonastery.jpeg', 'Gonjang Monastery')">More</button>
+          </div>
+        </div>
+      </div>
+      <div class="monastery-card">
+        <img src="./img/LingdumRankaMonastery.jpg" alt="Lingdum (Ranka) Monastery">
+        <div class="content">
+          <h3>Lingdum (Ranka) Monastery</h3>
+          <p>Impressive Tibetan architecture in a serene setting.</p>
+          <div class="actions">
+            <a href="https://en.wikipedia.org/wiki/Lingdum_Monastery" target="_blank" rel="noopener noreferrer">Learn more</a>
+            <button class="btn-more" onclick="openVideoModal('./Animated video/Lingdum Monastery Animated.mp4', 'Lingdum (Ranka) Monastery')">More</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Modal -->
+  <div id="videoModal" class="video-modal">
+    <div class="video-modal-content">
+      <span class="close" onclick="closeVideoModal()">&times;</span>
+      <video id="modalVideo" controls autoplay muted loop>
+        <source src="" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+
+  <!-- Chatbot (reuse existing markup so script works) -->
+  <div class="chatbot-wrapper">
+    <button id="chat-toggle">🙏 Namaste! How may I help you?</button>
+    <div id="chatbox">
+      <div id="chat-header">
+        <div class="chat-title">Sikkim Assistant</div>
+        <div class="chat-modes">
+          <button id="mode-monastery" class="mode-btn active">Monasteries</button>
+          <button id="mode-ai" class="mode-btn">AI</button>
+        </div>
+        <span id="close-btn" style="cursor:pointer;">✖</span>
+      </div>
+      <div id="chat-messages">
+        <div class="message bot">🙏 Namaste! Ask me about any Sikkim monastery. I can also answer general questions.</div>
+      </div>
+      <div id="ai-tools" style="display:none;">
+        <div class="ai-tools-row">
+          <input type="file" id="ai-file" accept="image/*">
+          <label for="ai-file" class="btn-file">Choose Image</label>
+        </div>
+        <img id="ai-preview" style="display:none;" alt="preview" />
+        <div id="ai-hint">Upload a monument/heritage image to get historical & cultural info.</div>
+      </div>
+      <div id="chat-input">
+        <input type="text" id="user-input" placeholder="Type your question...">
+        <button id="send-btn">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="footer-logo">📜</div>
+        <div>
+          <h4>Sikkim Monastery</h4>
+          <p>Preserving heritage, one pixel at a time.</p>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Contact Us</a>
+      </div>
+      <div class="footer-social">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2024 Sikkim Monastery. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- Scripts: reuse main script for menu + chatbot; omit Google Maps here -->
+  <script src="script.js"></script>
+  
+  <!-- Video Modal Script -->
+  <script>
+    function openVideoModal(mediaSrc, title) {
+      const modal = document.getElementById('videoModal');
+      const video = document.getElementById('modalVideo');
+      const source = video.querySelector('source');
+      
+      // Check if it's a video or image
+      if (mediaSrc.includes('.mp4')) {
+        // It's a video
+        video.style.display = 'block';
+        source.src = mediaSrc;
+        video.load(); // Reload video with new source
+        
+        // Hide any existing image
+        const img = modal.querySelector('.modal-image');
+        if (img) img.style.display = 'none';
+      } else {
+        // It's an image - show as image instead of video
+        video.style.display = 'none';
+        
+        // Create or update image element
+        let img = modal.querySelector('.modal-image');
+        if (!img) {
+          img = document.createElement('img');
+          img.className = 'modal-image';
+          img.style.cssText = 'width: 100%; height: auto; max-height: 80vh; border-radius: 8px;';
+          modal.querySelector('.video-modal-content').appendChild(img);
+        }
+        img.src = mediaSrc;
+        img.alt = title;
+        img.style.display = 'block';
+      }
+      
+      modal.style.display = 'block';
+      
+      // Close modal when clicking outside the content
+      modal.onclick = function(event) {
+        if (event.target === modal) {
+          closeVideoModal();
+        }
+      };
+    }
+    
+    function closeVideoModal() {
+      const modal = document.getElementById('videoModal');
+      const video = document.getElementById('modalVideo');
+      const img = modal.querySelector('.modal-image');
+      
+      modal.style.display = 'none';
+      video.pause();
+      video.currentTime = 0; // Reset video to beginning
+      if (img) img.style.display = 'none';
+    }
+    
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        closeVideoModal();
+      }
+    });
+  </script>
+</body>
+</html>
+
+

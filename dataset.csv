@@ -1,0 +1,41 @@
+Option_ID	No_of_Days	Day	Monastery_Name	District	Nearest_Town	Visit_Duration	Travel_Pace	Key_Experience
+OPT1	1	Day 1	Enchey Monastery	East Sikkim	Gangtok	1–1.5 hrs	Easy	Cultural
+OPT1	1	Day 1	Rumtek Monastery	East Sikkim	Gangtok	2 hrs	Easy	Spiritual
+
+| OPT2 | 2 | Day 1 | Enchey Monastery | East Sikkim | Gangtok | 1–1.5 hrs | Easy | City monastery |
+| OPT2 | 2 | Day 1 | Rumtek Monastery | East Sikkim | Gangtok | 2 hrs | Easy | Learning center |
+| OPT2 | 2 | Day 2 | Pemayangtse Monastery | West Sikkim | Pelling | 2 hrs | Moderate | Heritage |
+| OPT2 | 2 | Day 2 | Tashiding Monastery | West Sikkim | Yuksom | 1–1.5 hrs | Moderate | Sacred site |
+
+| OPT3 | 3 | Day 1 | Enchey Monastery | East Sikkim | Gangtok | 1–1.5 hrs | Easy | Cultural |
+| OPT3 | 3 | Day 1 | Rumtek Monastery | East Sikkim | Gangtok | 2 hrs | Easy | Spiritual |
+| OPT3 | 3 | Day 2 | Pemayangtse Monastery | West Sikkim | Pelling | 2 hrs | Moderate | Heritage |
+| OPT3 | 3 | Day 2 | Tashiding Monastery | West Sikkim | Yuksom | 1–1.5 hrs | Moderate | Pilgrimage |
+| OPT3 | 3 | Day 3 | Ralang Monastery | South Sikkim | Ravangla | 2 hrs | Easy | Festival culture |
+
+| OPT4 | 4 | Day 1 | Enchey Monastery | East Sikkim | Gangtok | 1–1.5 hrs | Easy | Cultural |
+| OPT4 | 4 | Day 1 | Rumtek Monastery | East Sikkim | Gangtok | 2 hrs | Easy | Spiritual |
+| OPT4 | 4 | Day 2 | Lingdum Monastery | East Sikkim | Gangtok | 1.5 hrs | Easy | Meditation |
+| OPT4 | 4 | Day 3 | Pemayangtse Monastery | West Sikkim | Pelling | 2 hrs | Moderate | Heritage |
+| OPT4 | 4 | Day 4 | Tashiding Monastery | West Sikkim | Yuksom | 1–1.5 hrs | Moderate | Sacred |
+
+| OPT5 | 5 | Day 1 | Enchey Monastery | East Sikkim | Gangtok | 1–1.5 hrs | Easy | Cultural |
+| OPT5 | 5 | Day 2 | Rumtek Monastery | East Sikkim | Gangtok | 2 hrs | Easy | Spiritual |
+| OPT5 | 5 | Day 3 | Pemayangtse Monastery | West Sikkim | Pelling | 2 hrs | Moderate | Heritage |
+| OPT5 | 5 | Day 4 | Tashiding Monastery | West Sikkim | Yuksom | 1–1.5 hrs | Moderate | Pilgrimage |
+| OPT5 | 5 | Day 5 | Sanga Choeling Monastery | West Sikkim | Pelling | 1.5 hrs | Easy | Scenic |
+
+| OPT6 | 6 | Day 1 | Enchey Monastery | East Sikkim | Gangtok | 1–1.5 hrs | Easy | Cultural |
+| OPT6 | 6 | Day 2 | Rumtek Monastery | East Sikkim | Gangtok | 2 hrs | Easy | Spiritual |
+| OPT6 | 6 | Day 3 | Lingdum Monastery | East Sikkim | Gangtok | 1.5 hrs | Easy | Meditation |
+| OPT6 | 6 | Day 4 | Pemayangtse Monastery | West Sikkim | Pelling | 2 hrs | Moderate | Heritage |
+| OPT6 | 6 | Day 5 | Tashiding Monastery | West Sikkim | Yuksom | 1–1.5 hrs | Moderate | Sacred |
+| OPT6 | 6 | Day 6 | Ralang Monastery | South Sikkim | Ravangla | 2 hrs | Easy | Festival |
+
+| OPT7 | 7 | Day 1 | Enchey Monastery | East Sikkim | Gangtok | 1–1.5 hrs | Easy | Cultural |
+| OPT7 | 7 | Day 2 | Rumtek Monastery | East Sikkim | Gangtok | 2 hrs | Easy | Spiritual |
+| OPT7 | 7 | Day 3 | Lingdum Monastery | East Sikkim | Gangtok | 1.5 hrs | Easy | Meditation |
+| OPT7 | 7 | Day 4 | Pemayangtse Monastery | West Sikkim | Pelling | 2 hrs | Moderate | Heritage |
+| OPT7 | 7 | Day 5 | Tashiding Monastery | West Sikkim | Yuksom | 1–1.5 hrs | Moderate | Pilgrimage |
+| OPT7 | 7 | Day 6 | Dubdi Monastery | West Sikkim | Yuksom | 1.5 hrs | Moderate | Oldest monastery |
+| OPT7 | 7 | Day 7 | Phodong Monastery | North Sikkim | Phodong | 1–1.5 hrs | Moderate | Scenic |

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | Sikkim Monastery</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .page-hero { padding-top: 90px; background: #0a0a0a; color: #fff; text-align: center; padding-bottom: 30px; }
+    .page-hero h1 { font-size: 2rem; margin-bottom: 8px; }
+    .page-hero p { color: #ddd; max-width: 800px; margin: 0 auto; }
+
+    .admin-section { padding: 30px 20px 60px; background: #f9f9f9; }
+    .admin-container { max-width: 1400px; margin: 0 auto; }
+    
+    .admin-tabs { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
+    .tab-btn { background: #fff; border: 2px solid #ddd; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s; }
+    .tab-btn.active { background: #dc3545; color: white; border-color: #dc3545; }
+    .tab-btn:hover { background: #f0f0f0; }
+    .tab-btn.active:hover { background: #c82333; }
+
+    .tab-content { display: none; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+    .tab-content.active { display: block; }
+
+    .content-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; margin-top: 20px; }
+    .content-card { background: #fff; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); overflow: hidden; border: 1px solid #e0e0e0; }
+    .content-card img, .content-card video { width: 100%; height: 200px; object-fit: cover; }
+    .content-card .card-content { padding: 20px; }
+    .content-card h4 { margin-bottom: 10px; color: #333; }
+    .content-card p { color: #666; margin-bottom: 15px; }
+    .content-card .meta { font-size: 0.9rem; color: #888; margin-bottom: 10px; }
+    .content-card .user-info { background: #f8f9fa; padding: 10px; border-radius: 6px; margin-bottom: 10px; }
+    .content-card .actions { display: flex; gap: 10px; }
+    .btn-delete { background: #dc3545; color: white; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9rem; }
+    .btn-delete:hover { background: #c82333; }
+    .btn-approve { background: #28a745; color: white; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9rem; }
+    .btn-approve:hover { background: #218838; }
+
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+    .stat-card { background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); text-align: center; }
+    .stat-card h3 { font-size: 2rem; margin: 0; color: #007bff; }
+    .stat-card p { margin: 5px 0 0; color: #666; }
+
+    .logout-section { text-align: center; margin-top: 30px; padding: 20px; background: #fff; border-radius: 12px; }
+
+    /* Event Form Styles */
+    .event-form { max-width: 600px; margin: 0 auto; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; margin-bottom: 5px; font-weight: 600; color: #333; }
+    .form-group input, .form-group textarea, .form-group select { 
+      width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 6px; font-size: 16px; 
+      transition: border-color 0.3s; box-sizing: border-box;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { 
+      outline: none; border-color: #007bff; 
+    }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .btn { padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: 600; transition: all 0.3s; }
+    .btn-primary { background: #007bff; color: white; }
+    .btn-primary:hover { background: #0056b3; }
+  </style>
+  <link rel="icon" href="data:,">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">Sikkim Monastery - Admin</div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="monasteries.html">Monasteries</a></li>
+      <li><a href="http://localhost:5174" target="_blank" rel="noopener">Preservation</a></li>
+      <li><a href="#">Virtual Tours</a></li>
+      <li><a href="#">Archives</a></li>
+      <li><a href="#">About Us</a></li>
+      <li><a href="login.html">Login</a></li>
+    </ul>
+    <a href="#" class="explore-btn">Explore</a>
+    <div class="hamburger" id="hamburger">☰</div>
+  </nav>
+
+  <!-- Side Menu -->
+  <div class="side-menu" id="side-menu">
+    <span class="close-btn" id="close-side">✖</span>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="monasteries.html">Monasteries</a></li>
+        <li><a href="http://localhost:5174" target="_blank" rel="noopener">Preservation</a></li>
+      <li><a href="#">Virtual Tours</a></li>
+      <li><a href="#">Archives</a></li>
+      <li><a href="#">About Us</a></li>
+      <li><a href="login.html">Login</a></li>
+    </ul>
+  </div>
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <h1>Admin Dashboard</h1>
+    <p>Manage user content, experiences, photos, videos, and feedback from the community.</p>
+  </section>
+
+  <!-- Admin Content -->
+  <section class="admin-section">
+    <div class="admin-container">
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3 id="totalExperiences">0</h3>
+          <p>Total Experiences</p>
+        </div>
+        <div class="stat-card">
+          <h3 id="totalPhotos">0</h3>
+          <p>Total Photos</p>
+        </div>
+        <div class="stat-card">
+          <h3 id="totalVideos">0</h3>
+          <p>Total Videos</p>
+        </div>
+        <div class="stat-card">
+          <h3 id="totalFeedback">0</h3>
+          <p>Total Feedback</p>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="admin-tabs">
+        <button class="tab-btn" onclick="showTab('addEvent')">Add Event</button>
+        <button class="tab-btn active" onclick="showTab('experiences')">All Experiences</button>
+        <button class="tab-btn" onclick="showTab('photos')">All Photos</button>
+        <button class="tab-btn" onclick="showTab('videos')">All Videos</button>
+        <button class="tab-btn" onclick="showTab('feedback')">All Feedback</button>
+      </div>
+
+      <!-- Add Event Tab -->
+      <div id="addEvent" class="tab-content">
+        <h3>Add New Event</h3>
+        <form id="eventForm" class="event-form">
+          <div class="form-group">
+            <label for="eventTitle">Event Title *</label>
+            <input type="text" id="eventTitle" name="title" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="eventDescription">Description *</label>
+            <textarea id="eventDescription" name="description" rows="4" required></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label for="eventDate">Event Date *</label>
+            <input type="date" id="eventDate" name="date" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="eventTime">Event Time *</label>
+            <input type="time" id="eventTime" name="time" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="eventLocation">Location *</label>
+            <input type="text" id="eventLocation" name="location" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="eventMonastery">Related Monastery</label>
+            <select id="eventMonastery" name="monastery">
+              <option value="">Select Monastery (Optional)</option>
+              <option value="Rumtek Monastery">Rumtek Monastery</option>
+              <option value="Pemayangtse Monastery">Pemayangtse Monastery</option>
+              <option value="Tashiding Monastery">Tashiding Monastery</option>
+              <option value="Enchey Monastery">Enchey Monastery</option>
+              <option value="Phodong Monastery">Phodong Monastery</option>
+              <option value="Lachen Monastery">Lachen Monastery</option>
+              <option value="Ralong Monastery">Ralong Monastery</option>
+              <option value="Phensong Monastery">Phensong Monastery</option>
+              <option value="Kartok Monastery">Kartok Monastery</option>
+              <option value="Bongtang Monastery">Bongtang Monastery</option>
+              <option value="Dubdi Monastery">Dubdi Monastery</option>
+              <option value="Gonjang Monastery">Gonjang Monastery</option>
+              <option value="Labrang Monastery">Labrang Monastery</option>
+              <option value="Lingdum Ranka Monastery">Lingdum Ranka Monastery</option>
+              <option value="Rinchenpong Monastery">Rinchenpong Monastery</option>
+              <option value="Sanga Choeling Monastery">Sanga Choeling Monastery</option>
+              <option value="Zang Dhok Palri Phodang">Zang Dhok Palri Phodang</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="eventContact">Contact Information</label>
+            <input type="text" id="eventContact" name="contact" placeholder="Phone or Email">
+          </div>
+          
+          <button type="submit" class="btn btn-primary">Add Event</button>
+        </form>
+      </div>
+
+      <!-- Experiences Tab -->
+      <div id="experiences" class="tab-content active">
+        <h3>User Experiences</h3>
+        <div id="allExperiencesList" class="content-grid"></div>
+      </div>
+
+      <!-- Photos Tab -->
+      <div id="photos" class="tab-content">
+        <h3>User Photos</h3>
+        <div id="allPhotosList" class="content-grid"></div>
+      </div>
+
+      <!-- Videos Tab -->
+      <div id="videos" class="tab-content">
+        <h3>User Videos</h3>
+        <div id="allVideosList" class="content-grid"></div>
+      </div>
+
+      <!-- Feedback Tab -->
+      <div id="feedback" class="tab-content">
+        <h3>User Feedback</h3>
+        <div id="allFeedbackList" class="content-grid"></div>
+      </div>
+
+      
+
+      <!-- Logout Section -->
+      <div class="logout-section">
+        <p>Welcome, <span id="adminEmail"></span>!</p>
+        <button class="btn-delete" onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chatbot (reuse existing markup so script works) -->
+  <div class="chatbot-wrapper">
+    <button id="chat-toggle">🙏 Namaste! How may I help you?</button>
+    <div id="chatbox">
+      <div id="chat-header">
+        <div class="chat-title">Sikkim Assistant</div>
+        <div class="chat-modes">
+          <button id="mode-monastery" class="mode-btn active">Monasteries</button>
+          <button id="mode-ai" class="mode-btn">AI</button>
+        </div>
+        <span id="close-btn" style="cursor:pointer;">✖</span>
+      </div>
+      <div id="chat-messages">
+        <div class="message bot">🙏 Namaste! Ask me about any Sikkim monastery. I can also answer general questions.</div>
+      </div>
+      <div id="ai-tools" style="display:none;">
+        <div class="ai-tools-row">
+          <input type="file" id="ai-file" accept="image/*">
+          <label for="ai-file" class="btn-file">Choose Image</label>
+        </div>
+        <img id="ai-preview" style="display:none;" alt="preview" />
+        <div id="ai-hint">Upload a monument/heritage image to get historical & cultural info.</div>
+      </div>
+      <div id="chat-input">
+        <input type="text" id="user-input" placeholder="Type your question...">
+        <button id="send-btn">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="footer-logo">📜</div>
+        <div>
+          <h4>Sikkim Monastery</h4>
+          <p>Preserving heritage, one pixel at a time.</p>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Contact Us</a>
+      </div>
+      <div class="footer-social">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2024 Sikkim Monastery. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+  <script src="admin-dashboard.js"></script>
+  <script>
+    // Auth check for admin dashboard
+    (function(){
+      try{
+        const raw = localStorage.getItem('user');
+        if(!raw){ window.location.href='login.html'; return; }
+        const user = JSON.parse(raw);
+        if(!user || !user.role || user.role.toLowerCase() !== 'admin'){
+          alert('Admin access required. Redirecting to login.');
+          window.location.href='login.html';
+          return;
+        }
+        // Optionally display admin email/name
+        const emailEl = document.getElementById('adminEmail');
+        if(emailEl) emailEl.innerText = user.email || user.name || '';
+      }catch(e){ console.error(e); window.location.href='login.html'; }
+    })();
+  </script>
+  <!-- Removed Firebase-powered admin script -->
+</body>
+</html>

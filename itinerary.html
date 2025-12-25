@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Itinerary | Sikkim Monastery</title>
+  
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .page-hero {
+      padding-top: 90px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      text-align: center;
+      padding-bottom: 40px;
+    }
+    
+    .itinerary-section {
+      background: #f9f9f9;
+      padding: 40px 16px 60px;
+    }
+    
+    .itinerary-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .itinerary-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .itinerary-header h2 {
+      font-size: 2.5rem;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    
+    .itinerary-header p {
+      color: #666;
+      font-size: 1.1rem;
+    }
+    
+    .itinerary-filters {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+    
+    .filter-btn {
+      padding: 10px 20px;
+      border: 2px solid #007bff;
+      background: #fff;
+      color: #007bff;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: #007bff;
+      color: #fff;
+    }
+    
+    .day-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s, opacity 0.3s;
+      opacity: 1;
+    }
+    
+    .day-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+    
+    .day-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      padding: 20px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .day-number {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    
+    .day-date {
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+    
+    .day-content {
+      padding: 25px;
+    }
+    
+    .day-overview {
+      color: #666;
+      margin-bottom: 20px;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    
+    .activities-section {
+      margin-top: 20px;
+    }
+    
+    .activities-section h4 {
+      color: #333;
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .activity-item {
+      display: flex;
+      gap: 15px;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      border-left: 4px solid #007bff;
+    }
+    
+    .activity-time {
+      font-weight: bold;
+      color: #007bff;
+      min-width: 100px;
+      font-size: 0.95rem;
+    }
+    
+    .activity-details {
+      flex: 1;
+    }
+    
+    .activity-title {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 5px;
+    }
+    
+    .activity-description {
+      color: #666;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    
+    .monastery-highlight {
+      background: #e7f3ff;
+      border-left-color: #0056b3;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+    }
+    
+    .monastery-highlight h5 {
+      color: #0056b3;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+    }
+    
+    .monastery-highlight p {
+      color: #555;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    
+    .tips-section {
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    
+    .tips-section h5 {
+      color: #856404;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+    }
+    
+    .tips-section ul {
+      margin-left: 20px;
+      color: #856404;
+    }
+    
+    .tips-section li {
+      margin-bottom: 5px;
+      font-size: 0.95rem;
+    }
+    
+    .day-selector-container {
+      background: #fff;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    
+    .day-selector-container h3 {
+      color: #333;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+    }
+    
+    .day-selector {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    
+    .day-option {
+      padding: 12px 24px;
+      border: 2px solid #007bff;
+      background: #fff;
+      color: #007bff;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s;
+      min-width: 80px;
+    }
+    
+    .day-option:hover {
+      background: #e7f3ff;
+      transform: translateY(-2px);
+    }
+    
+    .day-option.active {
+      background: #007bff;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    }
+    
+    .day-selector-info {
+      color: #666;
+      font-size: 0.95rem;
+      margin-top: 15px;
+      font-style: italic;
+    }
+    
+    .itinerary-summary {
+      background: #fff;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    
+    .summary-item {
+      text-align: center;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+    
+    .summary-item .icon {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: #007bff;
+    }
+    
+    .summary-item .value {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 5px;
+    }
+    
+    .summary-item .label {
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .muted-note {
+      color: #555;
+    }
+
+    .summary-title {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .close-icon {
+      cursor: pointer;
+    }
+
+    .hidden-block {
+      display: none;
+    }
+
+    .hidden-img {
+      display: none;
+    }
+
+    /* Planner form */
+    .planner-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .planner-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-field label {
+      font-weight: 600;
+      color: #333;
+    }
+
+    .form-field select {
+      padding: 10px 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      background: #fff;
+    }
+
+    .planner-results {
+      margin-top: 20px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .plan-day {
+      border: 1px solid #e5e5e5;
+      border-radius: 10px;
+      padding: 16px;
+      background: #f8f9fa;
+    }
+
+    .plan-day h4 {
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .plan-item {
+      padding: 12px;
+      border-radius: 8px;
+      background: #fff;
+      border-left: 4px solid #007bff;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .plan-item-title {
+      font-weight: 700;
+      color: #222;
+    }
+
+    .plan-meta {
+      color: #555;
+      font-size: 0.9rem;
+    }
+
+    .plan-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.85rem;
+    }
+
+    .tag {
+      background: #e7f3ff;
+      color: #0056b3;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #cfe4ff;
+    }
+    
+    @media (max-width: 768px) {
+      .day-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      
+      .activity-item {
+        flex-direction: column;
+        gap: 8px;
+      }
+      
+      .activity-time {
+        min-width: auto;
+      }
+      
+      .itinerary-header h2 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">Sikkim Monastery</div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="monasteries.html">Monasteries</a></li>
+      <li><a href="#">Virtual Tours</a></li>
+      <li><a href="#">Archives</a></li>
+      <li><a href="#">About Us</a></li>
+      <li><a href="itinerary.html">Travel Itinerary</a></li>
+    </ul>
+    <a href="login.html" class="explore-btn">Login</a>
+    <div class="hamburger" id="hamburger">☰</div>
+  </nav>
+
+  <!-- Side Menu -->
+  <div class="side-menu" id="side-menu">
+    <span class="close-btn" id="close-side">✖</span>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="monasteries.html">Monasteries</a></li>
+      <li><a href="#">Virtual Tours</a></li>
+      <li><a href="#">Archives</a></li>
+      <li><a href="#">About Us</a></li>
+      <li><a href="itinerary.html">Travel Itinerary</a></li>
+      <li><a href="login.html">Login</a></li>
+    </ul>
+  </div>
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <h1>Travel Itinerary</h1>
+    <p>Plan your spiritual journey through Sikkim's sacred monasteries</p>
+  </section>
+
+  <!-- Itinerary Section -->
+  <section class="itinerary-section">
+    <div class="itinerary-container">
+      
+      <!-- Day Selector -->
+      <div class="day-selector-container">
+        <h3>Choose Your Itinerary Duration</h3>
+        <div class="day-selector">
+          <button class="day-option" data-days="1">1 Day</button>
+          <button class="day-option" data-days="2">2 Days</button>
+          <button class="day-option" data-days="3">3 Days</button>
+          <button class="day-option" data-days="4">4 Days</button>
+          <button class="day-option" data-days="5">5 Days</button>
+          <button class="day-option" data-days="6">6 Days</button>
+          <button class="day-option active" data-days="7">7 Days</button>
+        </div>
+        <p class="day-selector-info">Select the number of days for your Sikkim monastery tour</p>
+      </div>
+      
+      <!-- Data-driven planner -->
+      <div class="planner-card">
+        <h3>Build Your Plan from Dataset</h3>
+        <div class="planner-grid">
+          <div class="form-field">
+            <label for="days-select">Number of Days</label>
+            <select id="days-select">
+              <option value="">Any</option>
+              <option value="1">1 Day</option>
+              <option value="2">2 Days</option>
+              <option value="3">3 Days</option>
+              <option value="4">4 Days</option>
+              <option value="5">5 Days</option>
+              <option value="6">6 Days</option>
+              <option value="7">7 Days</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="town-select">Nearest Town</label>
+            <select id="town-select">
+              <option value="">Any</option>
+              <option value="Gangtok">Gangtok</option>
+              <option value="Pelling">Pelling</option>
+              <option value="Yuksom">Yuksom</option>
+              <option value="Phodong">Phodong</option>
+              <option value="Ravangla">Ravangla</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="experience-select">Key Experience</label>
+            <select id="experience-select">
+              <option value="">Any</option>
+              <option value="Cultural">Cultural</option>
+              <option value="Spiritual">Spiritual</option>
+              <option value="Heritage">Heritage</option>
+              <option value="Pilgrimage">Pilgrimage</option>
+              <option value="Sacred">Sacred</option>
+              <option value="City monastery">City monastery</option>
+              <option value="Learning center">Learning center</option>
+              <option value="Meditation">Meditation</option>
+              <option value="Festival culture">Festival culture</option>
+              <option value="Festival">Festival</option>
+              <option value="Scenic">Scenic</option>
+            </select>
+          </div>
+        </div>
+        <div id="planner-results" class="planner-results">
+          <p class="muted-note">Choose filters to see the itinerary generated from dataset.csv</p>
+        </div>
+      </div>
+
+      <!-- Itinerary Summary -->
+      <div class="itinerary-summary">
+        <h2 class="summary-title" id="summary-title">Sikkim Monastery Plan</h2>
+        <div class="summary-grid">
+          <div class="summary-item">
+            <div class="icon">🗓️</div>
+            <div class="value" id="summary-days">7 Days</div>
+            <div class="label">Duration</div>
+          </div>
+          <div class="summary-item">
+            <div class="icon">🏛️</div>
+            <div class="value" id="summary-monasteries">--</div>
+            <div class="label">Stops</div>
+          </div>
+          <div class="summary-item">
+            <div class="icon">📍</div>
+            <div class="value">Gangtok</div>
+            <div class="label">Base City</div>
+          </div>
+          <div class="summary-item">
+            <div class="icon">⛰️</div>
+            <div class="value">Best</div>
+            <div class="label">Season: Oct-Apr</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="muted-note">Use the filters above to generate a custom itinerary from the latest dataset.</p>
+    </div>
+  </section>
+
+  <!-- Chatbot -->
+  <div class="chatbot-wrapper">
+    <button id="chat-toggle">🙏 Namaste! How may I help you?</button>
+    <div id="chatbox">
+      <div id="chat-header">
+        <div class="chat-title">Sikkim Assistant</div>
+        <div class="chat-modes">
+          <button id="mode-monastery" class="mode-btn active">Monasteries</button>
+          <button id="mode-ai" class="mode-btn">AI</button>
+        </div>
+        <span id="close-btn" class="close-icon">✖</span>
+      </div>
+      <div id="chat-messages">
+        <div class="message bot">🙏 Namaste! Ask me about any Sikkim monastery. I can also answer general questions.</div>
+      </div>
+      <div id="ai-tools" class="hidden-block">
+        <div class="ai-tools-row">
+          <input type="file" id="ai-file" accept="image/*">
+          <label for="ai-file" class="btn-file">Choose Image</label>
+        </div>
+        <img id="ai-preview" class="hidden-img" alt="preview" />
+        <div id="ai-hint">Upload a monument/heritage image to get historical & cultural info.</div>
+      </div>
+      <div id="chat-input">
+        <input type="text" id="user-input" placeholder="Type your question...">
+        <button id="send-btn">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="footer-logo">📜</div>
+        <div>
+          <h4>Sikkim Monastery</h4>
+          <p>Preserving heritage, one pixel at a time.</p>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Contact Us</a>
+      </div>
+      <div class="footer-social">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2024 Sikkim Monastery. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+  <script>
+    // Dataset derived from updated dataset.csv
+    const dataset = [
+      { optionId: 'OPT1', days: 1, day: 'Day 1', monastery: 'Enchey Monastery', district: 'East Sikkim', town: 'Gangtok', duration: '1–1.5 hrs', pace: 'Easy', experience: 'Cultural' },
+      { optionId: 'OPT1', days: 1, day: 'Day 1', monastery: 'Rumtek Monastery', district: 'East Sikkim', town: 'Gangtok', duration: '2 hrs', pace: 'Easy', experience: 'Spiritual' },
+
+      { optionId: 'OPT2', days: 2, day: 'Day 1', monastery: 'Enchey Monastery', district: 'East Sikkim', town: 'Gangtok', duration: '1–1.5 hrs', pace: 'Easy', experience: 'City monastery' },
+      { optionId: 'OPT2', days: 2, day: 'Day 1', monastery: 'Rumtek Monastery', district: 'East Sikkim', town: 'Gangtok', duration: '2 hrs', pace: 'Easy', experience: 'Learning center' },
+      { optionId: 'OPT2', days: 2, day: 'Day 2', monastery: 'Pemayangtse Monastery', district: 'West Sikkim', town: 'Pelling', duration: '2 hrs', pace: 'Moderate', experience: 'Heritage' },
+      { optionId: 'OPT2', days: 2, day: 'Day 2', monastery: 'Tashiding Monastery', district: 'West Sikkim', town: 'Yuksom', duration: '1–1.5 hrs', pace: 'Moderate', experience: 'Sacred site' },
+
+      { optionId: 'OPT3', days: 3, day: 'Day 1', monastery: 'Enchey Monastery', district: 'East Sikkim', town: 'Gangtok', duration: '1–1.5 hrs', pace: 'Easy', experience: 'Cultural' },
+      { optionId: 'OPT3', days: 3, day: 'Day 1', monastery: 'Rumtek Monastery', district: 'East Sikkim', town: 'Gangtok', duration: '2 hrs', pace: 'Easy', experience: 'Spiritual' },
+      { optionId: 'OPT3', days: 3, day: 'Day 2', monastery: 'Pemayangtse Monastery', district: 'West Sikkim', town: 'Pelling', duration: '2 hrs', pace: 'Moderate', experience: 'Heritage' },
+      { optionId: 'OPT3', days: 3, day: 'Day 2', monastery: 'Tashiding Monastery', district: 'West Sikkim', town: 'Yuksom', duration: '1–1.5 hrs', pace: 'Moderate', experience: 'Pilgrimage' },
+      { optionId: 'OPT3', days: 3, day: 'Day 3', monastery: 'Ralang Monastery', district: 'South Sikkim', town: 'Ravangla', duration: '2 hrs', pace: 'Easy', experience: 'Festival culture' },
+
+      { optionId: 'OPT4', days: 4, day: 'Day 1', monastery: 'Enchey Monastery', district: 'East Sikkim', town: 'Gangtok', duration: '1–1.5 hrs', pace: 'Easy', experience: 'Cultural' },
+      { optionId: 'OPT4', days: 4, day: 'Day 1', monastery: 'Rumtek Monastery', district: 'East Sikkim', town: 'Gangtok', duration: '2 hrs', pace: 'Easy', experience: 'Spiritual' },
+      { optionId: 'OPT4', days: 4, day: 'Day 2', monastery: 'Lingdum Monastery', district: 'East Sikkim', town: 'Gangtok', duration: '1.5 hrs', pace: 'Easy', experience: 'Meditation' },
+      { optionId: 'OPT4', days: 4, day: 'Day 3', monastery: 'Pemayangtse Monastery', district: 'West Sikkim', town: 'Pelling', duration: '2 hrs', pace: 'Moderate', experience: 'Heritage' },
+      { optionId: 'OPT4', days: 4, day: 'Day 4', monastery: 'Tashiding Monastery', district: 'West Sikkim', town: 'Yuksom', duration: '1–1.5 hrs', pace: 'Moderate', experience: 'Sacred' },
+
+      { optionId: 'OPT5', days: 5, day: 'Day 1', monastery: 'Enchey Monastery', district: 'East Sikkim', town: 'Gangtok', duration: '1–1.5 hrs', pace: 'Easy', experience: 'Cultural' },
+      { optionId: 'OPT5', days: 5, day: 'Day 2', monastery: 'Rumtek Monastery', district: 'East Sikkim', town: 'Gangtok', duration: '2 hrs', pace: 'Easy', experience: 'Spiritual' },
+      { optionId: 'OPT5', days: 5, day: 'Day 3', monastery: 'Pemayangtse Monastery', district: 'West Sikkim', town: 'Pelling', duration: '2 hrs', pace: 'Moderate', experience: 'Heritage' },
+      { optionId: 'OPT5', days: 5, day: 'Day 4', monastery: 'Tashiding Monastery', district: 'West Sikkim', town: 'Yuksom', duration: '1–1.5 hrs', pace: 'Moderate', experience: 'Pilgrimage' },
+      { optionId: 'OPT5', days: 5, day: 'Day 5', monastery: 'Sanga Choeling Monastery', district: 'West Sikkim', town: 'Pelling', duration: '1.5 hrs', pace: 'Easy', experience: 'Scenic' },
+
+      { optionId: 'OPT6', days: 6, day: 'Day 1', monastery: 'Enchey Monastery', district: 'East Sikkim', town: 'Gangtok', duration: '1–1.5 hrs', pace: 'Easy', experience: 'Cultural' },
+      { optionId: 'OPT6', days: 6, day: 'Day 2', monastery: 'Rumtek Monastery', district: 'East Sikkim', town: 'Gangtok', duration: '2 hrs', pace: 'Easy', experience: 'Spiritual' },
+      { optionId: 'OPT6', days: 6, day: 'Day 3', monastery: 'Lingdum Monastery', district: 'East Sikkim', town: 'Gangtok', duration: '1.5 hrs', pace: 'Easy', experience: 'Meditation' },
+      { optionId: 'OPT6', days: 6, day: 'Day 4', monastery: 'Pemayangtse Monastery', district: 'West Sikkim', town: 'Pelling', duration: '2 hrs', pace: 'Moderate', experience: 'Heritage' },
+      { optionId: 'OPT6', days: 6, day: 'Day 5', monastery: 'Tashiding Monastery', district: 'West Sikkim', town: 'Yuksom', duration: '1–1.5 hrs', pace: 'Moderate', experience: 'Sacred' },
+      { optionId: 'OPT6', days: 6, day: 'Day 6', monastery: 'Ralang Monastery', district: 'South Sikkim', town: 'Ravangla', duration: '2 hrs', pace: 'Easy', experience: 'Festival' },
+
+      { optionId: 'OPT7', days: 7, day: 'Day 1', monastery: 'Enchey Monastery', district: 'East Sikkim', town: 'Gangtok', duration: '1–1.5 hrs', pace: 'Easy', experience: 'Cultural' },
+      { optionId: 'OPT7', days: 7, day: 'Day 2', monastery: 'Rumtek Monastery', district: 'East Sikkim', town: 'Gangtok', duration: '2 hrs', pace: 'Easy', experience: 'Spiritual' },
+      { optionId: 'OPT7', days: 7, day: 'Day 3', monastery: 'Lingdum Monastery', district: 'East Sikkim', town: 'Gangtok', duration: '1.5 hrs', pace: 'Easy', experience: 'Meditation' },
+      { optionId: 'OPT7', days: 7, day: 'Day 4', monastery: 'Pemayangtse Monastery', district: 'West Sikkim', town: 'Pelling', duration: '2 hrs', pace: 'Moderate', experience: 'Heritage' },
+      { optionId: 'OPT7', days: 7, day: 'Day 5', monastery: 'Tashiding Monastery', district: 'West Sikkim', town: 'Yuksom', duration: '1–1.5 hrs', pace: 'Moderate', experience: 'Pilgrimage' },
+      { optionId: 'OPT7', days: 7, day: 'Day 6', monastery: 'Dubdi Monastery', district: 'West Sikkim', town: 'Yuksom', duration: '1.5 hrs', pace: 'Moderate', experience: 'Oldest monastery' },
+      { optionId: 'OPT7', days: 7, day: 'Day 7', monastery: 'Phodong Monastery', district: 'North Sikkim', town: 'Phodong', duration: '1–1.5 hrs', pace: 'Moderate', experience: 'Scenic' }
+    ];
+
+    function normalize(str) {
+      return (str || '').toLowerCase();
+    }
+
+    function matchesFilter(entry, filters) {
+      const { days, town, experience } = filters;
+      const daysOk = !days || entry.days === days;
+      const townOk = !town || normalize(entry.town) === normalize(town);
+      const experienceOk = !experience || normalize(entry.experience).includes(normalize(experience));
+      return daysOk && townOk && experienceOk;
+    }
+
+    function groupByDay(entries) {
+      return entries.reduce((acc, item) => {
+        const key = item.day;
+        if (!acc[key]) acc[key] = [];
+        acc[key].push(item);
+        return acc;
+      }, {});
+    }
+
+    function renderPlanner(entries) {
+      const container = document.getElementById('planner-results');
+      container.innerHTML = '';
+
+      if (!entries.length) {
+        container.innerHTML = '<p class="muted-note">No results. Try a different combination of filters.</p>';
+        return;
+      }
+
+      const grouped = groupByDay(entries);
+      Object.keys(grouped).forEach(dayKey => {
+        const dayDiv = document.createElement('div');
+        dayDiv.className = 'plan-day';
+        dayDiv.innerHTML = `<h4>${dayKey}</h4>`;
+
+        grouped[dayKey].forEach(item => {
+          const el = document.createElement('div');
+          el.className = 'plan-item';
+          el.innerHTML = `
+            <div class="plan-item-title">${item.monastery}</div>
+            <div class="plan-meta">${item.district} • Nearest town: ${item.town} • Duration: ${item.duration} • Pace: ${item.pace}</div>
+            <div class="plan-tags">
+              <span class="tag">${item.experience}</span>
+            </div>
+          `;
+          dayDiv.appendChild(el);
+        });
+
+        container.appendChild(dayDiv);
+      });
+    }
+
+    function updateSummary(days, count) {
+      const summaryTitle = document.getElementById('summary-title');
+      const summaryDays = document.getElementById('summary-days');
+      const summaryMonasteries = document.getElementById('summary-monasteries');
+      summaryTitle.textContent = `${days ? days + '-Day' : 'Custom'} Sikkim Monastery Plan`;
+      summaryDays.textContent = days ? `${days} Day${days > 1 ? 's' : ''}` : 'Custom';
+      summaryMonasteries.textContent = `${count} stops`;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const dayOptions = document.querySelectorAll('.day-option');
+      const daysSelect = document.getElementById('days-select');
+      const townSelect = document.getElementById('town-select');
+      const experienceSelect = document.getElementById('experience-select');
+
+      function syncButtonsWithSelect() {
+        dayOptions.forEach(opt => opt.classList.remove('active'));
+        if (daysSelect.value) {
+          const match = document.querySelector(`.day-option[data-days="${daysSelect.value}"]`);
+          if (match) match.classList.add('active');
+        }
+      }
+
+      function runPlanner() {
+        const filters = {
+          days: daysSelect.value ? parseInt(daysSelect.value) : null,
+          town: townSelect.value,
+          experience: experienceSelect.value
+        };
+        const filtered = dataset.filter(entry => matchesFilter(entry, filters));
+        renderPlanner(filtered);
+        updateSummary(filters.days, filtered.length);
+      }
+
+      dayOptions.forEach(option => {
+        option.addEventListener('click', function() {
+          dayOptions.forEach(opt => opt.classList.remove('active'));
+          this.classList.add('active');
+          daysSelect.value = this.getAttribute('data-days');
+          runPlanner();
+        });
+      });
+
+      [daysSelect, townSelect, experienceSelect].forEach(select => {
+        select.addEventListener('change', () => {
+          syncButtonsWithSelect();
+          runPlanner();
+        });
+      });
+
+      // Initialize with max days selected (7-day plan)
+      daysSelect.value = '7';
+      syncButtonsWithSelect();
+      runPlanner();
+    });
+  </script>
+
+</body>
+</html>
+
+

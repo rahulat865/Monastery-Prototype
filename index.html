@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sikkim Monastery</title>
+  
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">Sikkim Monastery</div>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="monasteries.html">Monasteries</a></li>
+      <li><a href="https://www.360easyvr.com/vr/9096?scene_id=25633" target="_blank" rel="noopener">Virtual Tours</a></li>
+      <li><a href="#">Archives</a></li>
+      <li><a href="#">About Us</a></li>
+      <li><a href="itinerary.html">Travel Itinerary</a></li>
+      <li><a href="#" >Explore</a></li>
+    </ul>
+    <a href="login.html" class="explore-btn" >Login</a>
+    <div class="hamburger" id="hamburger">☰</div>
+  </nav>
+
+  <!-- Side Menu -->
+  <div class="side-menu" id="side-menu">
+    <span class="close-btn" id="close-side">✖</span>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="monasteries.html">Monasteries</a></li>
+      <li><a href="https://www.360easyvr.com/vr/9096?scene_id=25633" target="_blank" rel="noopener">Virtual Tours</a></li>
+      <li><a href="#">Archives</a></li>
+      <li><a href="#">About Us</a></li>
+      <li><a href="itinerary.html">Travel Itinerary</a></li>
+      <li><a href="login.html">Login</a></li>
+    </ul>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <video autoplay muted loop class="video-background">
+      <source src="./video/background_vid.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="hero-content">
+      <h1>Discover the Sikkim Monastery</h1>
+      <p>Explore the ancient monasteries of Sikkim through immersive virtual tours and a rich digital archive. Experience the cultural heritage and spiritual essence of these sacred sites from anywhere in the world.</p>
+      <a href="https://www.360easyvr.com/vr/9096?scene_id=25633" class="btn" target="_blank" rel="noopener">Start Exploring</a>
+    </div>
+  </section>
+
+  <!-- Sikkim Map Section -->
+  <section id="sikkim-map">
+    <h2>Interactive Map of Sikkim Monasteries</h2>
+    <div class="map-container">
+      <div id="map"></div>
+      <div id="monastery-details">
+        <h4>Rumtek Monastery</h4>
+        <div class="img">
+          <img src="./img/RumtekMonastery.jpeg" alt="Rumtek Monastery" id="monastery-img">
+        </div>
+        <div class="monastery-desc">
+          <p>The largest monastery in Sikkim, seat of the Karmapa Lama. Known as the Dharma Chakra Centre.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chatbot -->
+  <div class="chatbot-wrapper">
+    <button id="chat-toggle">🙏 Namaste! How may I help you?</button>
+    <div id="chatbox">
+      <div id="chat-header">
+        <div class="chat-title">Sikkim Assistant</div>
+        <div class="chat-modes">
+          <button id="mode-monastery" class="mode-btn active">Monasteries</button>
+          <button id="mode-ai" class="mode-btn">AI</button>
+        </div>
+        <span id="close-btn" style="cursor:pointer;">✖</span>
+      </div>
+      <div id="chat-messages">
+        <div class="message bot">🙏 Namaste! Ask me about any Sikkim monastery. I can also answer general questions.</div>
+      </div>
+      <div id="ai-tools" style="display:none;">
+        <div class="ai-tools-row">
+          <input type="file" id="ai-file" accept="image/*">
+          <label for="ai-file" class="btn-file">Choose Image</label>
+        </div>
+        <img id="ai-preview" style="display:none;" alt="preview" />
+        <div id="ai-hint">Upload a monument/heritage image to get historical & cultural info.</div>
+      </div>
+      <div id="chat-input">
+        <input type="text" id="user-input" placeholder="Type your question...">
+        <button id="send-btn">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Virtual Tour Section -->
+  <section class="cta">
+    <h2>Embark on a Virtual Journey</h2>
+    <p>Discover the hidden gems and spiritual significance of Sikkim's monasteries from the comfort of your home. Our platform offers a unique window into a world of tranquility and cultural richness.</p>
+    <a href="#" class="cta-btn">Start Exploring Now</a>
+  </section>
+
+  <!-- Upcoming Events (Public) -->
+  <section class="cta" id="events">
+    <h2>Upcoming Events</h2>
+    <div id="events-list"></div>
+  </section>
+
+  <!-- User Experiences -->
+  <section class="cta" id="user-experiences">
+    <h2>Community Experiences</h2>
+    <p>Read about other visitors' experiences at Sikkim monasteries</p>
+    <div id="userExperiences" class="user-content-grid"></div>
+  </section>
+
+  <!-- User Photos -->
+  <section class="cta" id="user-photos">
+    <h2>Community Photos</h2>
+    <p>See photos shared by our community members</p>
+    <div id="userPhotos" class="user-content-grid"></div>
+  </section>
+
+  <!-- User Videos -->
+  <section class="cta" id="user-videos">
+    <h2>Community Videos</h2>
+    <p>Watch videos shared by our community members</p>
+    <div id="userVideos" class="user-content-grid"></div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="footer-logo">📜</div>
+        <div>
+          <h4>Sikkim Monastery</h4>
+          <p>Preserving heritage, one pixel at a time.</p>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Contact Us</a>
+      </div>
+      <div class="footer-social">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2024 Sikkim Monastery. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrO1Uqzvp1KRi9JM-Q4WKkeqzWdjEY_Xo&callback=initMap" async defer></script>
+  <script src="script.js"></script>
+
+</body>
+</html>

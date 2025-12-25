@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Sikkim Monastery</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .page-hero { padding-top: 90px; background:#0a0a0a; color:#fff; text-align:center; padding-bottom: 24px; }
+    .login-section { background:#f9f9f9; padding: 30px 16px 60px; }
+    .login-wrapper { max-width: 980px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .login-card { background:#fff; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,.08); padding: 18px; }
+    .login-card h3 { margin-bottom: 10px; color:#222; font-size: 1.1rem; }
+    .login-card p { color:#666; font-size: .95rem; margin-bottom: 12px; }
+    .form-group { display:flex; flex-direction:column; gap: 8px; margin: 10px 0; }
+    .form-group label { font-size: .9rem; color:#333; }
+    .form-group input { padding: 10px 12px; border:1px solid #ddd; border-radius: 8px; font-size: .95rem; }
+    .btn-primary { display:inline-block; background:#007bff; color:#fff; text-decoration:none; border:none; padding: 10px 14px; border-radius: 8px; cursor:pointer; font-weight:600; }
+    .btn-primary:hover { background:#0066d6; }
+  </style>
+  <link rel="icon" href="data:,">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">Sikkim Monastery</div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="monasteries.html">Monasteries</a></li>
+      <li><a href="#">Virtual Tours</a></li>
+      <li><a href="#">Archives</a></li>
+      <li><a href="#">About Us</a></li>
+      <li><a href="login.html">Login</a></li>
+    </ul>
+    <a href="#" class="explore-btn">Explore</a>
+    <div class="hamburger" id="hamburger">☰</div>
+  </nav>
+
+  <!-- Side Menu -->
+  <div class="side-menu" id="side-menu">
+    <span class="close-btn" id="close-side">✖</span>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="monasteries.html">Monasteries</a></li>
+      <li><a href="#">Virtual Tours</a></li>
+      <li><a href="#">Archives</a></li>
+      <li><a href="#">About Us</a></li>
+      <li><a href="login.html">Login</a></li>
+    </ul>
+  </div>
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <h1>Login</h1>
+    <p>Choose your portal: Admin or User</p>
+  </section>
+
+  <!-- Login Options -->
+  <section class="login-section">
+    <div class="login-wrapper">
+      <div class="login-card" aria-labelledby="admin-login-title">
+        <h3 id="admin-login-title">Admin Login</h3>
+        <p>For site administrators to manage content and settings.</p>
+        <form id="admin-login-form" onsubmit="return false;">
+          <div class="form-group">
+            <label for="admin-email">Email</label>
+            <input id="admin-email" type="email" placeholder="admin@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="admin-password">Password</label>
+            <input id="admin-password" type="password" placeholder="••••••••" required>
+          </div>
+          <button class="btn-primary" type="submit">Login as Admin</button>
+        </form>
+      </div>
+
+      <div class="login-card" aria-labelledby="user-login-title">
+        <h3 id="user-login-title">User Login</h3>
+        <p>For visitors to access saved tours and preferences.</p>
+        <form id="user-login-form" onsubmit="return false;">
+          <div class="form-group">
+            <label for="user-email">Email</label>
+            <input id="user-email" type="email" placeholder="you@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="user-password">Password</label>
+            <input id="user-password" type="password" placeholder="••••••••" required>
+          </div>
+          <button class="btn-primary" type="submit">Login as User</button>
+        </form>
+      </div>
+
+      <div class="login-card" aria-labelledby="signup-title">
+        <h3 id="signup-title">Sign Up</h3>
+        <p>Create a new account (Student by default).</p>
+        <form id="signup-form" onsubmit="return false;">
+          <div class="form-group">
+            <label for="signup-name">Name</label>
+            <input id="signup-name" type="text" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <label for="signup-email">Email</label>
+            <input id="signup-email" type="email" placeholder="you@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="signup-password">Password</label>
+            <input id="signup-password" type="password" placeholder="••••••••" required>
+          </div>
+          <div class="form-group">
+            <label for="signup-role">Role</label>
+            <select id="signup-role">
+              <option value="Student" selected>Student</option>
+              <option value="Visitor">Visitor</option>
+              <option value="Admin">Admin</option>
+            </select>
+          </div>
+          <button class="btn-primary" type="submit">Create Account</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Admin Panel: Add Event (visible only to logged-in admins) -->
+  <section class="login-section" id="admin-panel" style="display:none;">
+    <div class="login-wrapper" style="grid-template-columns: 1fr;">
+      <div class="login-card">
+        <h3>Add Event</h3>
+        <form id="event-form">
+          <div class="form-group">
+            <label for="event-title">Title</label>
+            <input id="event-title" type="text" placeholder="Event title" required>
+          </div>
+          <div class="form-group">
+            <label for="event-date">Date</label>
+            <input id="event-date" type="date" required>
+          </div>
+          <div class="form-group">
+            <label for="event-image">Image URL (optional)</label>
+            <input id="event-image" type="url" placeholder="https://...">
+          </div>
+          <div class="form-group">
+            <label for="event-description">Description</label>
+            <input id="event-description" type="text" placeholder="Short description">
+          </div>
+          <button class="btn-primary" type="submit">Add Event</button>
+          <button class="btn-primary" type="button" id="logout-btn" style="margin-left:8px; background:#666;">Logout</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chatbot (reuse existing markup so script works) -->
+  <div class="chatbot-wrapper">
+    <button id="chat-toggle">🙏 Namaste! How may I help you?</button>
+    <div id="chatbox">
+      <div id="chat-header">
+        <div class="chat-title">Sikkim Assistant</div>
+        <div class="chat-modes">
+          <button id="mode-monastery" class="mode-btn active">Monasteries</button>
+          <button id="mode-ai" class="mode-btn">AI</button>
+        </div>
+        <span id="close-btn" style="cursor:pointer;">✖</span>
+      </div>
+      <div id="chat-messages">
+        <div class="message bot">🙏 Namaste! Ask me about any Sikkim monastery. I can also answer general questions.</div>
+      </div>
+      <div id="ai-tools" style="display:none;">
+        <div class="ai-tools-row">
+          <input type="file" id="ai-file" accept="image/*">
+          <label for="ai-file" class="btn-file">Choose Image</label>
+        </div>
+        <img id="ai-preview" style="display:none;" alt="preview" />
+        <div id="ai-hint">Upload a monument/heritage image to get historical & cultural info.</div>
+      </div>
+      <div id="chat-input">
+        <input type="text" id="user-input" placeholder="Type your question...">
+        <button id="send-btn">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="footer-logo">📜</div>
+        <div>
+          <h4>Sikkim Monastery</h4>
+          <p>Preserving heritage, one pixel at a time.</p>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Contact Us</a>
+      </div>
+      <div class="footer-social">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2024 Sikkim Monastery. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+</body>
+</html>
+
+
